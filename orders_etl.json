@@ -1,0 +1,256 @@
+[
+  {
+    "order_id": 1001,
+    "order_date": "2025-03-15",
+    "total_amount": 350.75,
+    "customer": {
+      "customer_id": 201,
+      "name": "Carlos Ruiz",
+      "email": "carlos.ruiz@email.com",
+      "address": "Av. del Sol 123, Lima"
+    },
+    "products": [
+      {
+        "product_id": "A10",
+        "name": "Monitor LED 24 pulgadas",
+        "category": "Tecnología",
+        "price": 150.00,
+        "quantity": 2
+      },
+      {
+        "product_id": "B20",
+        "name": "Silla de Oficina Ergonómica",
+        "category": "Muebles",
+        "price": 50.75,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "order_id": 1002,
+    "order_date": "2025-03-16",
+    "total_amount": 80.00,
+    "customer": {
+      "customer_id": 202,
+      "name": "Maria Vega",
+      "email": "maria.vega@email.com",
+      "address": "Calle Luna 456, Arequipa"
+    },
+    "products": [
+      {
+        "product_id": "C30",
+        "name": "Teclado Mecánico RGB",
+        "category": "Tecnología",
+        "price": 80.00,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "order_id": 1003,
+    "order_date": "2025-03-16",
+    "total_amount": 45.50,
+    "customer": {
+      "customer_id": 203,
+      "name": "Luis Torres",
+      "email": "luis.torres@email.com",
+      "address": "Jr. Puno 789, Cusco"
+    },
+    "products": [
+      {
+        "product_id": "D40",
+        "name": "Mousepad XL",
+        "category": "Accesorios",
+        "price": 20.00,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1004,
+    "order_date": "2025-03-17",
+    "total_amount": 200.00,
+    "customer": {
+      "customer_id": 201,
+      "name": "Carlos Ruiz",
+      "email": "carlos.ruiz@email.com",
+      "address": "Av. del Sol 123, Lima"
+    },
+    "products": [
+      {
+        "product_id": "E50",
+        "name": "Disco Duro Externo 1TB",
+        "category": "Almacenamiento",
+        "price": 100.00,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1005,
+    "order_date": "2025-03-18",
+    "total_amount": 120.00,
+    "customer": {
+      "customer_id": 204,
+      "name": "Ana Mendoza",
+      "email": "ana.mendoza@email.com",
+      "address": "Calle Falsa 123, Trujillo"
+    },
+    "products": [
+      {
+        "product_id": "F60",
+        "name": "Auriculares Bluetooth",
+        "category": "Audio",
+        "price": 60.00,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1006,
+    "order_date": "2025-03-18",
+    "total_amount": 300.00,
+    "customer": {
+      "customer_id": 202,
+      "name": "Maria Vega",
+      "email": "maria.vega@email.com",
+      "address": "Calle Luna 456, Arequipa"
+    },
+    "products": [
+      {
+        "product_id": "A10",
+        "name": "Monitor LED 24 pulgadas",
+        "category": "Tecnología",
+        "price": 150.00,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1007,
+    "order_date": "2025-03-19",
+    "total_amount": 75.00,
+    "customer": {
+      "customer_id": 205,
+      "name": "David Flores",
+      "email": "david.flores@email.com",
+      "address": "Av. Larco 555, Miraflores"
+    },
+    "products": [
+      {
+        "product_id": "G70",
+        "name": "Cargador Rápido USB-C",
+        "category": "Accesorios",
+        "price": 25.00,
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "order_id": 1008,
+    "order_date": "2025-03-19",
+    "total_amount": 160.00,
+    "customer": {
+      "customer_id": 203,
+      "name": "Luis Torres",
+      "email": "luis.torres@email.com",
+      "address": "Jr. Puno 789, Cusco"
+    },
+    "products": [
+      {
+        "product_id": "C30",
+        "name": "Teclado Mecánico RGB",
+        "category": "Tecnología",
+        "price": 80.00,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1009,
+    "order_date": "2025-03-20",
+    "total_amount": 100.00,
+    "customer": {
+      "customer_id": 206,
+      "name": "Sofia Diaz",
+      "email": "sofia.diaz@email.com",
+      "address": "Calle Sol 222, Piura"
+    },
+    "products": [
+      {
+        "product_id": "B20",
+        "name": "Silla de Oficina Ergonómica",
+        "category": "Muebles",
+        "price": 50.75,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "order_id": 1010,
+    "order_date": "2025-03-20",
+    "total_amount": 60.00,
+    "customer": {
+      "customer_id": 204,
+      "name": "Ana Mendoza",
+      "email": "ana.mendoza@email.com",
+      "address": "Calle Falsa 123, Trujillo"
+    },
+    "products": [
+      {
+        "product_id": "D40",
+        "name": "Mousepad XL",
+        "category": "Accesorios",
+        "price": 20.00,
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "order_id": 1011,
+    "order_date": "2025-03-21",
+    "total_amount": 250.00,
+    "customer": {
+      "customer_id": 201,
+      "name": "Carlos Ruiz",
+      "email": "carlos.ruiz@email.com",
+      "address": "Av. del Sol 123, Lima"
+    },
+    "products": [
+      {
+        "product_id": "F60",
+        "name": "Auriculares Bluetooth",
+        "category": "Audio",
+        "price": 60.00,
+        "quantity": 1
+      },
+      {
+        "product_id": "E50",
+        "name": "Disco Duro Externo 1TB",
+        "category": "Almacenamiento",
+        "price": 100.00,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "order_id": 1012,
+    "order_date": "2025-03-21",
+    "total_amount": 100.00,
+    "customer": {
+      "customer_id": 207,
+      "name": "Javier Luna",
+      "email": "javier.luna@email.com",
+      "address": "Av. Ejercito 321, Yanahuara"
+    },
+    "products": [
+      {
+        "product_id": "G70",
+        "name": "Cargador Rápido USB-C",
+        "category": "Accesorios",
+        "price": 25.00,
+        "quantity": 4
+      }
+    ]
+  }
+]
