@@ -72,7 +72,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM
 ```
 
-### 📁 Estructura del Repositorio
+### 📁 Estructura del Repositorio 
 aws-etl-pipeline/
 │
 ├── src/
