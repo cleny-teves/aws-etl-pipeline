@@ -10,17 +10,17 @@ El objetivo es transformar datos crudos de ventas (JSON) en un formato optimizad
 
 Este pipeline está basado en eventos: todo ocurre automáticamente en cuanto un archivo llega al Data Lake.
 
-![Arquitectura](arquitectura_etl_pipeline.png)
+![Arquitectura](arquitectura-etl-pipeline.png)
 
 ## 🔄 Flujo Completo del ETL
 
-1.  **Ingesta:** Un archivo JSON es cargado en la carpeta de entrada del bucket S3: `orders-json-incoming/`.
+1.  **Ingesta:** Un archivo JSON es cargado en la carpeta de entrada del bucket S3: `orders-json-incoming`.
 2.  **Activación Automática:** S3 detecta el nuevo archivo y ejecuta una función AWS Lambda mediante un trigger nativo.
 3.  **Transformación:** La Lambda procesa el archivo utilizando Python + Pandas:
     * Lee el JSON.
     * Aplana la estructura.
     * Convierte los datos al formato Parquet optimizado para análisis.
-4.  **Almacenamiento Optimizado:** El archivo procesado se mueve a la carpeta de salida en el Data Lake: `orders_parquet_datalake/`.
+4.  **Almacenamiento Optimizado:** El archivo procesado se mueve a la carpeta de salida en el Data Lake: `orders_parquet_datalake`.
 5.  **Catalogación:** La Lambda invoca automáticamente un crawler de AWS Glue para actualizar las tablas del Data Catalog.
 6.  **Análisis:** En minutos, los datos están listos para ser consultados en Amazon Athena usando SQL estándar.
 
@@ -88,15 +88,11 @@ aws-etl-pipeline/
 ### 🧪 ¿Cómo probar el pipeline?
 Una vez desplegado:
 
-Sube cualquier archivo JSON de prueba a la carpeta: orders-json-incoming/ en tu bucket S3.
-
-Espera unos segundos y revisa la carpeta: orders_parquet_datalake/.
-
-Allí aparecerá el archivo Parquet generado automáticamente.
-
-Verifica que el Glue Crawler haya actualizado el catálogo.
-
-Abre Amazon Athena y consulta tu tabla con SQL:
+1. Sube cualquier archivo JSON de prueba a la carpeta: orders-json-incoming en tu bucket S3.
+2. Espera unos segundos y revisa la carpeta: orders_parquet_datalake.
+3. Allí aparecerá el archivo Parquet generado automáticamente.
+4. Verifica que el Glue Crawler haya actualizado el catálogo.
+5. Abre Amazon Athena y consulta tu tabla con SQL:
 ```bash
 SELECT * FROM orders_parquet LIMIT 10;
 ```
