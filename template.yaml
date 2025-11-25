@@ -1,1 +1,103 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Proyecto de IaC para un Pipeline de ETL Serverless en AWS.
+  S3 -> Lambda (Python/Pandas) -> S3 (Parquet) -> Glue -> Athena
 
+Resources:
+  # 1. El Bucket S3 (con sus dos carpetas)
+  ETLBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mi-pipeline-etl-project-${AWS::AccountId}"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+# Permissions
+  AllowS3ToCallLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref ETLLambdaFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !GetAtt  ETLBucket.Arn
+
+  # 2. El "Robot" (Función Lambda)
+  ETLLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mi-etl-pipeline
+      CodeUri: src/
+      # IMPORTANTE: El handler debe ser 'nombre_archivo.nombre_funcion'
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      Timeout: 90
+      MemorySize: 512
+      Policies:
+        - AmazonS3FullAccess
+        - AWSGlueConsoleFullAccess
+        - CloudWatchLogsFullAccess
+      Layers:
+        # Este ARN es público y corresponde a la capa de Pandas para Python 3.12 en us-east-1
+        - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312:1
+      Environment:
+        Variables:
+          SOURCE_FOLDER: 'orders-json-incoming/'
+          # Usamos !Sub para el nombre del bucket y evitar dependencia circular
+          TARGET_BUCKET: !Sub "mi-pipeline-etl-project-${AWS::AccountId}"
+          TARGET_FOLDER: 'orders_parquet_datalake/'
+          CRAWLER_NAME: 'etl_pipeline_crawler'
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket: !Ref  ETLBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                - Name: prefix      # or "suffix"
+                  Value: orders-json-incoming/      # The value to search for in the S3 object key names
+                - Name: suffix
+                  Value: .json
+  # 4. La "Base de Datos" del Catálogo de Glue
+  GlueDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: etl_database
+
+  # 5. El "Auditor" (Glue Crawler)
+  GlueCrawler:
+    Type: AWS::Glue::Crawler
+    Properties:
+      Name: etl_pipeline_crawler
+      Role: !GetAtt GlueCrawlerRole.Arn
+      DatabaseName: !Ref GlueDatabase
+      Targets:
+        S3Targets:
+          - Path: !Sub "s3://${ETLBucket}/orders_parquet_datalake/"
+
+  # 6. Permisos para el "Auditor" (Rol de IAM para Glue)
+  GlueCrawlerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+Outputs:
+  S3BucketName:
+    Description: "Nombre del bucket S3 principal para el pipeline"
+    Value: !Ref ETLBucket
