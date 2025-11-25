@@ -50,3 +50,54 @@ cd "/c/proyectos-aws/project-03-etl-pipeline"
 
 ### 2️⃣ Crear el bucket para artefactos de CloudFormation
 Necesitamos un bucket temporal para subir el código de la Lambda antes del despliegue.
+```bash
+aws s3 mb s3://artifacts-mi-etl-pipeline-565393068619
+```
+
+### 3️⃣ Empaquetar la plantilla
+Este comando sube el código local de la Lambda al bucket de artefactos y prepara la plantilla para el despliegue.
+```bash
+aws cloudformation package \
+  --template-file template.yaml \
+  --s3-bucket artifacts-mi-etl-pipeline-565393068619 \
+  --output-template-file packaged.yaml
+```
+
+### 4️⃣ Desplegar la infraestructura completa
+Este comando lee el archivo empaquetado y construye todos los recursos en tu cuenta de AWS.
+```bash
+aws cloudformation deploy \
+  --template-file packaged.yaml \
+  --stack-name mi-etl-pipeline-stack \
+  --capabilities CAPABILITY_NAMED_IAM
+```
+
+### 📁 Estructura del Repositorio
+aws-etl-pipeline/
+│
+├── src/
+│   └── lambda-function.py        # Lógica ETL (JSON → Parquet)
+│
+├── template.yaml                 # Plantilla IaC original (CloudFormation)
+├── packaged.yaml                 # Versión empaquetada (generada por AWS CLI)
+│
+├── orders_etl.json               # Archivo JSON de ejemplo para pruebas
+├── README.md                     # Documentación del proyecto
+└── .gitignore                    # Archivos ignorados por Git
+
+### 🧪 ¿Cómo probar el pipeline?
+Una vez desplegado:
+
+Sube cualquier archivo JSON de prueba a la carpeta: orders-json-incoming/ en tu bucket S3.
+
+Espera unos segundos y revisa la carpeta: orders_parquet_datalake/.
+
+Allí aparecerá el archivo Parquet generado automáticamente.
+
+Verifica que el Glue Crawler haya actualizado el catálogo.
+
+Abre Amazon Athena y consulta tu tabla con SQL:
+```bash
+SELECT * FROM orders_parquet LIMIT 10;
+```
+
