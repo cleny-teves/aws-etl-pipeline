@@ -46,3 +46,7 @@ Antes de desplegar asegúrate de tener:
 Abre tu terminal y navega a la carpeta del proyecto:
 ```bash
 cd "/c/proyectos-aws/project-03-etl-pipeline"
+```
+
+### 2️⃣ Crear el bucket para artefactos de CloudFormation
+Necesitamos un bucket temporal para subir el código de la Lambda antes del despliegue.
